@@ -87,6 +87,7 @@ X = X_numeric
 from sentence_transformers import SentenceTransformer
 from sklearn.decomposition import PCA
 
+
 # 要進行embedding的文字欄位
 text_columns = ['reviews','detailed_description']
 
@@ -106,9 +107,10 @@ def reduce_dim_with_pca(embeddings, n_components=64):
 # 建立embeddings並用PCA降維
 embeddings_reduced = []
 pca_models = {}
+
 for col in text_columns:
     emb = extract_embeddings(train_df, col)
-    emb_reduced, pca_model = reduce_dim_with_pca(emb, n_components=100)
+    emb_reduced, pca_model = reduce_dim_with_pca(emb, n_components=64)
     embeddings_reduced.append(emb_reduced)
     pca_models[col] = pca_model
 
@@ -293,7 +295,7 @@ batch_size = 128
 """
 
 # TODO(Medium baseline) - Training Hyperparameters: 自行調整訓練超參數來改善模型表現
-n_epochs = 2500          # 訓練回合數
+n_epochs = 1500        # 訓練回合數
 learning_rate = 1e-5     # 學習率
 batch_size = 256      # 每次訓練取多少樣本
 """沒有正則化：
